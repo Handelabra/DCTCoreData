@@ -94,6 +94,7 @@
 	NSError *error = nil;
 	
 	NSArray *fetchResult = [self executeFetchRequest:request error:&error];
+	[request release];
 	
 	if (error) {
 		NSLog(@"DCTDataFetching: Error fetching objects. %@", error);

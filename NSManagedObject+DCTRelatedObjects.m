@@ -48,6 +48,7 @@
 	
     [self didChangeValueForKey:key withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
 	
+    [changedObjects release];
 }
 
 - (void)dct_removeRelatedObject:(id)object forKey:(NSString *)key {
@@ -59,6 +60,7 @@
 	
     [self didChangeValueForKey:key withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
 	
+    [changedObjects release];
 }
 
 - (void)dct_replaceRelatedObject:(id)oldObject withRelatedObject:(id)newObject forKey:(NSString *)key {	
@@ -71,6 +73,7 @@
 	
     [self didChangeValueForKey:key withSetMutation:NSKeyValueSetSetMutation usingObjects:changedObjects];
 	
+    [changedObjects release];
 }
 
 @end

@@ -42,9 +42,9 @@
 #import "NSManagedObject+DCTRelatedObjects.h"
 #import "NSDictionary+DCTKeyForObject.h"
 
-BOOL const DCTManagedObjectAutomatedSetupLogStorageFailures = NO;
-BOOL const DCTManagedObjectAutomatedSetupLogAutomaticPrimaryKeyUse = NO;
-BOOL const DCTManagedObjectAutomatedSetupLogExtremeFailures = NO;
+BOOL const DCTManagedObjectAutomatedSetupLogStorageFailures = YES;
+BOOL const DCTManagedObjectAutomatedSetupLogAutomaticPrimaryKeyUse = YES;
+BOOL const DCTManagedObjectAutomatedSetupLogExtremeFailures = YES;
 
 @interface NSManagedObject ()
 
@@ -81,10 +81,11 @@ BOOL const DCTManagedObjectAutomatedSetupLogExtremeFailures = NO;
 	if (!object)
 		object = [moc dct_insertNewObjectForEntityName:entityName];
 	
+	[object retain];
 	
 	[object dct_setupFromDictionary:dictionary];	
 	
-	return object;
+	return [object autorelease];
 }
 
 - (BOOL)dct_setupFromDictionary:(NSDictionary *)dictionary {
@@ -99,7 +100,7 @@ BOOL const DCTManagedObjectAutomatedSetupLogExtremeFailures = NO;
 	if ([[self class] respondsToSelector:@selector(dct_mappingFromRemoteNamesToLocalNames)])
 		mapping = [selfclass dct_mappingFromRemoteNamesToLocalNames];
 	
-	for (__strong NSString *key in dictionary) {
+	for (NSString *key in dictionary) {
 		
 		id object = [dictionary objectForKey:key];
 		
@@ -200,6 +201,7 @@ BOOL const DCTManagedObjectAutomatedSetupLogExtremeFailures = NO;
 	}
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
+	[predicateString release];
 	
 	return [moc dct_fetchAnyObjectForEntityName:[entity name] predicate:predicate];
 	

@@ -41,30 +41,30 @@ NSUInteger const DCTFetchBatchSizeNil = 0;
 @implementation NSFetchRequest (DCTExtras)
 
 + (id)dct_fetchRequestWithEntity:(NSEntityDescription *)entity {
-	return [[self alloc] dct_initWithEntity:entity];
+	return [[[self alloc] dct_initWithEntity:entity] autorelease];
 }
 
 + (id)dct_fetchRequestWithEntity:(NSEntityDescription *)entity
 					   predicate:(NSPredicate *)predicate {
 	
-	return [[self alloc] dct_initWithEntity:entity
-								   predicate:predicate];
+	return [[[self alloc] dct_initWithEntity:entity
+								   predicate:predicate] autorelease];
 }
 
 + (id)dct_fetchRequestWithEntity:(NSEntityDescription *)entity 
 				 sortDescriptors:(NSArray *)sortDescriptors {
 	
-	return [[self alloc] dct_initWithEntity:entity
-							 sortDescriptors:sortDescriptors];
+	return [[[self alloc] dct_initWithEntity:entity
+							 sortDescriptors:sortDescriptors] autorelease];
 }
 
 + (id)dct_fetchRequestWithEntity:(NSEntityDescription *)entity
 					   predicate:(NSPredicate *)predicate
 				 sortDescriptors:(NSArray *)sortDescriptors {
 	
-	return [[self alloc] dct_initWithEntity:entity
+	return [[[self alloc] dct_initWithEntity:entity
 								   predicate:predicate
-							 sortDescriptors:sortDescriptors];
+							 sortDescriptors:sortDescriptors] autorelease];
 }
 
 + (id)dct_fetchRequestWithEntity:(NSEntityDescription *)entity
@@ -72,10 +72,10 @@ NSUInteger const DCTFetchBatchSizeNil = 0;
 				 sortDescriptors:(NSArray *)sortDescriptors
 					   batchSize:(NSUInteger)batchSize {
 	
-	return [[self alloc] dct_initWithEntity:entity
+	return [[[self alloc] dct_initWithEntity:entity
 								   predicate:predicate
 							 sortDescriptors:sortDescriptors
-								   batchSize:batchSize];
+								   batchSize:batchSize] autorelease];
 }
 
 - (id)dct_initWithEntity:(NSEntityDescription *)entity {
@@ -119,17 +119,17 @@ NSUInteger const DCTFetchBatchSizeNil = 0;
 		 sortDescriptors:(NSArray *)sortDescriptors
 			   batchSize:(NSUInteger)batchSize {
 	
-	NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+	if (!(self = [self init])) return nil;
 	
-	[fr setEntity:entity];
+	[self setEntity:entity];
 	
-	if (predicate) [fr setPredicate:predicate];
+	if (predicate) [self setPredicate:predicate];
 	
-	if (sortDescriptors) [fr setSortDescriptors:sortDescriptors];
+	if (sortDescriptors) [self setSortDescriptors:sortDescriptors];
 	
-	if (batchSize != DCTFetchBatchSizeNil) [fr setFetchBatchSize:batchSize];
+	if (batchSize != DCTFetchBatchSizeNil) [self setFetchBatchSize:batchSize];
 	
-	return fr;
+	return self;
 }
 
 @end
